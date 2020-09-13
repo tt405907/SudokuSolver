@@ -5,7 +5,7 @@ Personal project to explore some new technologies (tkinter,backtracking,..)
 
 ### Information
 In the folder there is a `.rar` file containing 3 million sudoku so don't be surprised if the download takes a few seconds.
-Your environment will need a 64 bits python and the version >= 3.7 .
+Your environment will need a 64-bit python and the version >= 3.7 .
 
 ### Clone
 
