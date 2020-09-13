@@ -3,7 +3,7 @@ from tkinter.ttk import Frame
 from timeit import default_timer
 class FrameBottomSudoku(Frame):
     """ This class allows the management of the entire area below the sudoku """
-    def __init__(self,root,rootmain,functionResetGame,functionNewGame,functionActiveBot):
+    def __init__(self,root,rootmain,functionResetGame,functionNewGame,functionActiveBot,functionScan):
         # Frame Grid
         self.frameGrid = tkinter.Frame(root, background='black')
         self.frameGrid.pack(fill=tkinter.BOTH)
@@ -31,6 +31,11 @@ class FrameBottomSudoku(Frame):
         self.buttonBotActive = tkinter.Button(self.frameGrid, text="Active Bot")
         self.buttonBotActive.bind("<Button-1>", functionActiveBot)
         self.buttonBotActive.pack(side=tkinter.RIGHT, padx=(0,10), pady=13)
+        # Scaner
+        self.buttonScanner = tkinter.Button(self.frameGrid,text="Scan Sudoku")
+        self.buttonScanner.bind("<Button-1>",functionScan)
+        self.buttonScanner.pack(side=tkinter.RIGHT, padx=(0,10), pady=13)
+
 
     # Reboot Time 
     def rebootTimer(self):

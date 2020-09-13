@@ -2,17 +2,17 @@ import tkinter
 from frameSudoku import FrameSudoku
 from frameBottomSudoku import FrameBottomSudoku
 from bot import botManager,BotBacktracking,typeBot
-from unrar import rarfile
-import os
+from windowScan import ManagerWindowScan
 
-class Interface:
-    """ Main class """
+class managerWindowSudoku:
+    """ This class allows the management of the Sudoku window """
     def __init__(self,title,width,height):
         # Window Setup
         self.window = tkinter.Tk()
         self.window.title(title)
         self.window.minsize(width,height)
         self.window.maxsize(width,height)
+        self.window.protocol("WM_DELETE_WINDOW", self.callback_closing)
         # General color of the background of the Game
         self.window.configure(background='black')
         # Frame sudoku
@@ -24,9 +24,11 @@ class Interface:
         self.frameBottomSudoku = tkinter.Frame(self.window,background="brown")
         self.frameBottomSudoku.grid(row=1,column=0,sticky='WE',padx=(10,0))
         # Manager Bottom Frame Sudoku
-        self.managerFrameBottomSudoku = FrameBottomSudoku(self.frameBottomSudoku,self.window,self.callback_restartGame,self.callback_newGame,self.callback_activeBot)
+        self.managerFrameBottomSudoku = FrameBottomSudoku(self.frameBottomSudoku,self.window,self.callback_restartGame,self.callback_newGame,self.callback_activeBot,self.callback_scan)
         # Manager Bot
         self.managerBot = botManager(self.window,self.managerFrameSudoku,self.managerFrameBottomSudoku.buttonBotActive,self.managerFrameSudoku.current_board,typeBot.BOT_BACKTRACKING)
+        # Manager Scan windows
+        self.managerWindowScan = ManagerWindowScan("Sudoku Scan",500,500)
 
     def callback_restartGame(self,event):
         """ This is the callback calling by the button "restart" in the UI """
@@ -57,48 +59,23 @@ class Interface:
             print(">> BOT ACTIVE")
             self.managerFrameBottomSudoku.buttonBotActive.configure(background="green",activebackground="green")
             self.managerBot.turnOn()
+    
+    def callback_scan(self,event):
+        """ This will launch a new window where we will scan a sudoku and resolve it """
+        self.managerWindowScan.destroy()
+        print(">> SCAN SUDOKU RUNNING")
+        self.managerWindowScan.run()
+
+    def callback_closing(self):
+        """ This function will destroy this window and the Scan windows if he is running"""
+        self.managerWindowScan.destroy()
+        print(">> SUDOKU CLOSE")
+        self.window.destroy()
 
     def run(self):
         """ Run Run Run """
+        print(">> SUDOKU RUNNING")
         self.window.mainloop()
-
-class Application():
-    """ Class that makes sure that the pre-processing was done for the interface and game startup """
-    def __init__(self):
-        pass
-
-    def processRun(self):
-        """ This function will check that the pre-processing was done and will return the appropriate boolean """
-        sudokucsv = False
-        sudokurar = False
-        # Check than you already have extract the data from the .rar
-        for file in os.listdir('data'):
-            if(file == "sudoku.rar"):
-                sudokurar = True
-            if(file == "sudoku.csv"):
-                sudokucsv = True
-        # Already extract
-        if(sudokucsv):
-            return True
-        # We have to extract
-        if(sudokurar):
-            print(">> FILE EXTRACT")
-            rar = rarfile.RarFile('data/sudoku.rar')
-            rar.extractall('./data')
-            return True
-        else:
-            return False
-
-    def run(self):
-        """ Run the interface """
-        if(self.processRun()):
-            print(">> PREPROCESSING FINISH")
-            # Launch the interface
-            interface = Interface("Sudoku",455,500)
-            interface.run()
-        else:
-            print(">> ERROR : There is no sudoku.rar or sudoku.csv, we can't launch the interface")
-
 
 
 
