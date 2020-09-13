@@ -2,8 +2,8 @@
 Personal project to explore some new technologies (tkinter,backtracking,..)
 
 ### Coming soon
-Code cleanup (changing file names, classes and maybe some methods)
-Implementation of a new feature that will allow you to scan a sudoku from your camera.
+- Code cleanup (changing file names, classes and maybe some methods).
+- Implementation of a new feature that will allow you to scan a sudoku from your camera.
 
 ## How to run this code ?
 
