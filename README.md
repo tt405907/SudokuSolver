@@ -1,5 +1,5 @@
 # SudokuSolver
-Personal project to explore some new technologies (tkinter,backtracking,..)
+Personal project to explore some new technologies (tkinter,backtracking,opencv,...)
 
 ### Coming soon
 - Code cleanup (changing file names, classes and maybe some methods).
