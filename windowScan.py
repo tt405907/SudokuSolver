@@ -16,13 +16,13 @@ class ManagerWindowScan:
         self.window = tkinter.Tk()
         self.window.title(self.title)
         self.window.minsize(self.width,self.height)
-        self.window.maxsize(self.width,self.height)
+        #self.window.maxsize(self.width,self.height)
         # General color of the background of the Game
         self.window.configure(background='black')
         self.window.protocol("WM_DELETE_WINDOW", self.destroy)
         # Frame sudoku
-        self.frameCamera = tkinter.Frame(self.window, background='black')
-        self.frameCamera.grid( row=0, column=0 )
+        self.frameCamera = tkinter.Frame(self.window, background='yellow')
+        self.frameCamera.grid( row=0, column=0)
         # Manager Frame Sudoku
         self.managerFrameCamera = FrameCamera(self.frameCamera) 
         # Window receptive

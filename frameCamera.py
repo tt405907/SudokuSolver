@@ -20,9 +20,9 @@ class FrameCamera(Frame):
         # add "python.linting.pylintArgs": ["--generate-members"]
         self.videoCapture = cv2.VideoCapture(self.videoSource)
         # Resolution x 
-        self.videoCapture.set(3,500)
+        #self.videoCapture.set(3,500)
         # Resolution y 
-        self.videoCapture.set(4,500)
+        #self.videoCapture.set(4,500)
         if not self.videoCapture.isOpened():
             raise ValueError("Unable to open video source", self.videoSource)
         # Get video source width and height
@@ -32,7 +32,7 @@ class FrameCamera(Frame):
 
     def initCanvas(self):
         # init canvas
-        self.canvas = tkinter.Canvas(self.root,width= self.width,height = self.height)
+        self.canvas = tkinter.Canvas(self.root,width= self.width,height = self.height,bd=0, highlightthickness=0, relief='ridge')
         self.canvas.pack()
         # Refresh time image, 60 FPS
         self.delay = 10
@@ -40,18 +40,19 @@ class FrameCamera(Frame):
     def updateFrame(self):
         retval,frame = self.getFrame()
         if(retval):
-            photo = Pil_imageTk.PhotoImage(image = Pil_image.fromarray(frame))
-            self.canvas.create_image(0,0,image=photo,anchor=tkinter.NW)
-        self.root.after(self.delay,self.update)
+            self.photo = Pil_imageTk.PhotoImage(image = Pil_image.fromarray(frame),master=self.root)
+            self.canvas.create_image(0, 0, anchor= tkinter.NW, image= self.photo)
+            self.canvas.image = self.photo
+
+        self.root.after(self.delay,self.updateFrame)
 
 
     def getFrame(self):
         """ This function will return a frame of the video camera"""
         if(self.videoCapture.isOpened()):
             retval,frame = self.videoCapture.read()
-            if retval :
-                cv2.imshow('image',frame)
-                return (retval, cv2.cv2.COLOR_BGR2RGB)
+            if(retval):
+                return (retval, cv2.cvtColor(frame,cv2.cv2.COLOR_BGR2RGB))
             else:
                 return (retval,None)
 
