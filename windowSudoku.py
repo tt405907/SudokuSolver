@@ -28,7 +28,7 @@ class managerWindowSudoku:
         # Manager Bot
         self.managerBot = botManager(self.window,self.managerFrameSudoku,self.managerFrameBottomSudoku.buttonBotActive,self.managerFrameSudoku.current_board,typeBot.BOT_BACKTRACKING)
         # Manager Scan windows
-        self.managerWindowScan = ManagerWindowScan("Sudoku Scan",640,500)
+        self.managerWindowScan = ManagerWindowScan("Sudoku Scan",640,480)
 
     def callback_restartGame(self,event):
         """ This is the callback calling by the button "restart" in the UI """
